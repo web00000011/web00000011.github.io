@@ -45,11 +45,16 @@ excerpt: <b>&#35;Web3.0, &#35;Blockchain, &#35;ETH, &#35;Smart Contract</b>
 
 ![](https://www.notion.so/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F9a5130d6-cf56-4bd9-8e9b-4ac666fd88f6%2F70117f31-da8b-4bd0-bed8-4e8e92350a64%2FUntitled.png?table=block&id=33fc5068-5c1a-4da6-9793-188f601617a4&spaceId=9a5130d6-cf56-4bd9-8e9b-4ac666fd88f6&width=2000&userId=54bb8d41-f1b7-45fb-8f3a-7162d9846226&cache=v2)
 
-일단 블록체인에서의 첫 번째로 생성되는 블록은 Genesis Block이라고 한다. Genesis Block에는 장부의 데이터가 존재하지 않는다. 그리고 두 번째 블록부터는 Data & Transactions, Hash, Hash of the Previous Block, Time-Stamp, Nonce로 구성되어 있다. 이외에도 머클루트와 같은 다양한 요소가 추가된다.<br>
-`Data & Transactions`은 거래와 관련된 정보가 저장된다. 예를 들면 보낸/받는 사람 정보, 금액과 같은 정보들이다.<br>
-`Hash`는 블록의 고유 Hash이다. 블록체인의 모든 블록은 각 고유의 Hash를 가진다. 만약 블록을 변조하면 Hash 또한 변하게 되고 이 경우에는 해당 블록은 블록체인에 포함되지 않는다. 그러나 이 경우라도 블록은 삭제되지 않는다. 블록체인에 한 번 추가된 블록은 변경하거나 삭제할 수 없다.<br>
-`Hash of the Previous Block`은 이전 블록의 Hash이다. 모든 블록은 이전 블록의 해쉬를 가지고 있다. 이 때문에 블록이 변경되어 해쉬가 변경된 경우에 이 해쉬가 변경되었다고 판단할 수 있다.<br>
-`Timestamp`는 블록이 생성된 시간이라 보면 된다.<br>
+일단 블록체인에서의 첫 번째로 생성되는 블록은 Genesis Block이라고 한다. Genesis Block에는 장부의 데이터가 존재하지 않는다. 그리고 두 번째 블록부터는 Data & Transactions, Hash, Hash of the Previous Block, Time-Stamp, Nonce로 구성되어 있다. 이외에도 머클루트와 같은 다양한 요소가 추가된다.
+
+`Data & Transactions`은 거래와 관련된 정보가 저장된다. 예를 들면 보낸/받는 사람 정보, 금액과 같은 정보들이다.
+
+`Hash`는 블록의 고유 Hash이다. 블록체인의 모든 블록은 각 고유의 Hash를 가진다. 만약 블록을 변조하면 Hash 또한 변하게 되고 이 경우에는 해당 블록은 블록체인에 포함되지 않는다. 그러나 이 경우라도 블록은 삭제되지 않는다. 블록체인에 한 번 추가된 블록은 변경하거나 삭제할 수 없다.
+
+`Hash of the Previous Block`은 이전 블록의 Hash이다. 모든 블록은 이전 블록의 해쉬를 가지고 있다. 이 때문에 블록이 변경되어 해쉬가 변경된 경우에 이 해쉬가 변경되었다고 판단할 수 있다.
+
+`Timestamp`는 블록이 생성된 시간이라 보면 된다.
+
 `Nonce`는  블록 번호,  데이터, 이전 Hash와 함께 블록의 유효한 Hash를 계산하기 위한 해싱 알고리즘에 사용될 정수이다.
 
 ```javascript
@@ -172,7 +177,8 @@ proofOfWork(difficulty) {
 
 ![](https://www.notion.so/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F9a5130d6-cf56-4bd9-8e9b-4ac666fd88f6%2Fcf170b36-4270-4554-98c1-152d43d37653%2FUntitled.png?table=block&id=d2864ce8-20ec-4af4-87a9-dbe40f96a61e&spaceId=9a5130d6-cf56-4bd9-8e9b-4ac666fd88f6&width=2000&userId=54bb8d41-f1b7-45fb-8f3a-7162d9846226&cache=v2)
 
-블록의 해쉬를 보면 0이 4개로 시작하는 것을 볼 수 있다. 즉 nonce 값을 이용해서 해쉬를 만드는데 만약  difficulty(난이도)와 충족되는 해쉬가 아니라면 nonce의 값을 증가 시켜서 충족되는 해쉬가 나올 때 까지 루프를 타게 된다.<br>
+블록의 해쉬를 보면 0이 4개로 시작하는 것을 볼 수 있다. 즉 nonce 값을 이용해서 해쉬를 만드는데 만약  difficulty(난이도)와 충족되는 해쉬가 아니라면 nonce의 값을 증가 시켜서 충족되는 해쉬가 나올 때 까지 루프를 타게 된다.
+
 위 코드는 따로 난이도 조절은  없고, 예시로 든 코드이지만 실제로 블록체인 네트워크는 일정한 간격으로 새로운 블록을 생성하는 것을 목표로 하고 있기 때문에 난이도 조절을 한다.
 
 ## 합의 알고리즘
