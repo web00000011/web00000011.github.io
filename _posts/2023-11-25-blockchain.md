@@ -372,12 +372,14 @@ PoS는 PoW(Proof of Work)와 달리 블록을 채굴하는 대신, 네트워크 
 
 모든 블록의 해시를 확인하는 것은 매우 비효율적이고 시간 소모적이다. 머클트리는 데이터 무결성을 확인하는데 있어 효율적이기 때문에 사용된다. 먼저 머클 루트가 생성되는 방법은 위 사진을 기반으로 T<sub>A &nbsp;</sub>는 A의 transaction이고, T<sub>B &nbsp;</sub>는 B의 transaction이다. 그리고 각 트랜잭션의 해시는 H<sub>A &nbsp;</sub>, H<sub>B &nbsp;</sub>로 나타낸다. 이때 제일 가까운 두 개의 해시가 합쳐지는데 합쳐진 해시는 H<sub>AB &nbsp;</sub>가 된다. 이런 식으로 하나 하나 합쳐 나가면서 최종적으로 하나의 해시가 완성되는데 그 해시가 머클 루트이다. 위 사진에서는 H<sub>ABCDEFGH &nbsp;</sub>인데 이는 T<sub>A &nbsp;</sub>부터 T<sub>H &nbsp;</sub>까지의 거래의 머클 루트이다. 그리고 이렇게 생성된 머클 루트에 의해서 불변성과 무결성을 쉽게 유지할 수 있다.
 
-99,997번 비트코인의 머클루트는 `5140e5972f672bf8e81bc189894c55a410723b095716eaeec845490aed785f0e`이고 이 블록에는 총 2개의 거래가 있다. 각 TXID는 다음과 같다.
 
-0. `b86f5ef1da8ddbdb29ec269b535810ee61289eeac7bf2b2523b494551f03897c`
-1. `80c6f121c3e9fe0a59177e49874d8c703cbadee0700a782e4002e87d862373c6`
+```
+Merkle Root of 99,997 : 5140e5972f672bf8e81bc189894c55a410723b095716eaeec845490aed785f0e
 
-이 TXID를 이용해 위 머클루트를 구해보자.
+TXID 0 : b86f5ef1da8ddbdb29ec269b535810ee61289eeac7bf2b2523b494551f03897c
+TXID 1 : 80c6f121c3e9fe0a59177e49874d8c703cbadee0700a782e4002e87d862373c6
+```
+99,997번 비트코인의 머클루트는 Merkle Root of 99,997이고, 이 블록에는 총 2개의 거래가 있다. 각 TXID는 TXID 0,1이다. 이 TXID를 이용해 위 머클루트를 구해보자.
 
 ```javascript
 const crypto = require('crypto');
