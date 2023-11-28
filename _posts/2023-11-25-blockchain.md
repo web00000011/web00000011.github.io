@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Everything of Blockchain"
+title: "Blockchain"
 date: 2023-11-25 10:29:53
 excerpt: <b>&#35;Web3.0, &#35;Blockchain, &#35;ETH, &#35;Smart Contract</b>
 ---
