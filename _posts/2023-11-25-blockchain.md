@@ -7,7 +7,7 @@ excerpt: <b>&#35;Web3.0, &#35;Blockchain, &#35;ETH, &#35;Smart Contract</b>
 ## 목차
 - [블록체인이란?](#블록체인이란)
 - [블록체인의 중요 기능](#블록체인의-중요-기능)
-- [블록체인의 헤더 구조](#블록체인의-헤더-구조)
+- [블록체인의 구조](#블록체인의-구조)
 - [블록체인의 작동 방식](#블록체인의-작동-방식)
 - [합의 알고리즘](#합의-알고리즘)
 - [작업 증명 (Proof of Work, PoW)](#작업-증명-proof-of-work-pow)
@@ -41,21 +41,32 @@ excerpt: <b>&#35;Web3.0, &#35;Blockchain, &#35;ETH, &#35;Smart Contract</b>
 
 블록체인에 있어 중요한 기능을 하는 요소는 탈중앙화와 분산 원장, 불변성, 합의, 이중 지출의 문제 해결이다.
 
-## 블록체인의 헤더 구조
+## 블록체인의 구조
 
 ![](https://www.notion.so/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F9a5130d6-cf56-4bd9-8e9b-4ac666fd88f6%2F70117f31-da8b-4bd0-bed8-4e8e92350a64%2FUntitled.png?table=block&id=33fc5068-5c1a-4da6-9793-188f601617a4&spaceId=9a5130d6-cf56-4bd9-8e9b-4ac666fd88f6&width=2000&userId=54bb8d41-f1b7-45fb-8f3a-7162d9846226&cache=v2)
 
-일단 블록체인에서의 첫 번째로 생성되는 블록은 Genesis Block이라고 한다. Genesis Block에는 장부의 데이터가 존재하지 않는다. 그리고 두 번째 블록부터는 Data & Transactions, Hash, Hash of the Previous Block, Time-Stamp, Nonce로 구성되어 있다. 이외에도 머클루트와 같은 다양한 요소가 추가된다.
+일단 블록체인에서의 첫 번째로 생성되는 블록은 Genesis Block이라고 한다. Genesis Block에는 장부의 데이터가 존재하지 않는다. 
 
-`Data & Transactions`은 거래와 관련된 정보가 저장된다. 예를 들면 보낸/받는 사람 정보, 금액과 같은 정보들이다.
+![](https://www.researchgate.net/publication/337306138/figure/fig1/AS:825909783310336@1573923645768/The-structure-of-a-Blockchain-A-block-is-composed-of-a-header-and-a-body-where-a-header.png)
+그리고 두 번째 블록부터는 Index, Hash, Hash of the Previous Block, Mercle Root, Time-Stamp, Nonce로 구성되어 있는 Block-Header와 Data & Transactions로 구성되어 있는 Block-Body로 구성된다.
+
+> Block Header
+
+`Index`는 현재 블록체인에서의 블록의 순서를 나타내는 번호이다.
 
 `Hash`는 블록의 고유 Hash이다. 블록체인의 모든 블록은 각 고유의 Hash를 가진다. 만약 블록을 변조하면 Hash 또한 변하게 되고 이 경우에는 해당 블록은 블록체인에 포함되지 않는다. 그러나 이 경우라도 블록은 삭제되지 않는다. 블록체인에 한 번 추가된 블록은 변경하거나 삭제할 수 없다.
 
 `Hash of the Previous Block`은 이전 블록의 Hash이다. 모든 블록은 이전 블록의 해쉬를 가지고 있다. 이 때문에 블록이 변경되어 해쉬가 변경된 경우에 이 해쉬가 변경되었다고 판단할 수 있다.
 
+`Mercle Root`는 Block-Body에 있는 Transaction의 머클 트리 루트의 해시 값으로 블록 내의 모든 Transaction을 요악한 데이터이다.
+
 `Timestamp`는 블록이 생성된 시간이라 보면 된다.
 
 `Nonce`는  블록 번호,  데이터, 이전 Hash와 함께 블록의 유효한 Hash를 계산하기 위한 해싱 알고리즘에 사용될 정수이다.
+
+> Block Body
+
+`Data & Transactions`은 거래와 관련된 정보가 저장된다. 예를 들면 보낸/받는 사람 정보, 금액과 같은 정보들이다.
 
 ```javascript
 const SHA256 = require('crypto-js/sha256');
@@ -72,7 +83,7 @@ class CryptoBlock{
     }   
 }
 ```
-위 블록 생성을 위한 클래스는 위와 같이 만들 수 있다. index는 현재 블록의 번호, timestampe는 블록이 생성되는 시간, data는 거래와 관련된 정보, previousHash에는 이전 블록의 해쉬, hash는 현재 블록의 해쉬 값이다. 그리고 현재 블록의 해쉬를 생성하는 메서드인 computeHash() 메서드를 보면 현재 블록의 번호, 이전 블록의 해쉬, 현재 블록의 생성 시간, 거래 정보를 모두 더해서 해쉬로 만드는 것을 확인할 수 있다.
+블록 생성을 위한 클래스는 위와 같이 만들 수 있다. index는 현재 블록의 번호, timestampe는 블록이 생성되는 시간, data는 거래와 관련된 정보, previousHash에는 이전 블록의 해쉬, hash는 현재 블록의 해쉬 값이다. 그리고 현재 블록의 해쉬를 생성하는 메서드인 computeHash() 메서드를 보면 현재 블록의 번호, 이전 블록의 해쉬, 현재 블록의 생성 시간, 거래 정보를 모두 더해서 해쉬로 만드는 것을 확인할 수 있다.
 
 ## 블록체인의 작동 방식
 
