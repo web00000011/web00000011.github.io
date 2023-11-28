@@ -12,8 +12,8 @@ excerpt: <b>&#35;Web3.0, &#35;Blockchain, &#35;ETH, &#35;Smart Contract</b>
 - [합의 알고리즘](#합의-알고리즘)
 - [작업 증명 (Proof of Work, PoW)](#작업-증명-proof-of-work-pow)
 - [지분 증명 (Proof of Stake, PoS)](#지분-증명-proof-of-stake-pos)
-- [머클루트]()
-- [이더리움이란?]()
+- [머클루트](#머클루트)
+- [이더리움이란?](#이더리움이란)
 - [이더리움 가상 머신 (EVM)]()
 - [스마트 컨트랙트]()
 
@@ -363,3 +363,75 @@ CryptoBlock {
 PoS은 PoW(Proof of Work)보다 전력 소비량이 적고 블록 생성 속도가 빠르며, 보안성을 유지하는 장점이 있다. PoS를 간단히 설명하면 자신이 갖고 있는 암호화폐의 양에 따라서 블록을 생성할 권한을 준다.
 
 PoS는 PoW(Proof of Work)와 달리 블록을 채굴하는 대신, 네트워크 참여자들이 자신들의 암호화폐를 스테이킹하여 네트워크 보안을 유지하고 새로운 블록을 생성한다. PoS에서는 블록을 생성할 때 랜덤성을 사용하는 것이 일반적이다. 이때 랜덤성은 보유한 코인의 양과 관련이 있는데 일반적으로 블록을 생성할 때 스테이킹된 코인의 양이 클수록 블록을 생성할 확률이 높아지게 된다.
+
+## 머클루트
+
+머클루트는 블록의 헤더에 포함되어 있으며, 블록바디에 있는 모든 transaction의 요약본이라고 보면 된다. 조금 더 정확히 말하면 transactions의 머클트리이다.
+
+![](https://www.forex.academy/wp-content/uploads/2020/05/Merkle-Tree-FA.jpg)
+
+모든 블록의 해시를 확인하는 것은 매우 비효율적이고 시간 소모적이다. 머클트리는 데이터 무결성을 확인하는데 있어 효율적이기 때문에 사용된다. 먼저 머클 루트가 생성되는 방법은 위 사진을 기반으로 T<sub>A &nbsp;</sub>는 A의 transaction이고, T<sub>B &nbsp;</sub>는 B의 transaction이다. 그리고 각 트랜잭션의 해시는 H<sub>A &nbsp;</sub>, H<sub>B &nbsp;</sub>로 나타낸다. 이때 제일 가까운 두 개의 해시가 합쳐지는데 합쳐진 해시는 H<sub>AB &nbsp;</sub>가 된다. 이런 식으로 하나 하나 합쳐 나가면서 최종적으로 하나의 해시가 완성되는데 그 해시가 머클 루트이다. 위 사진에서는 H<sub>ABCDEFGH &nbsp;</sub>인데 이는 T<sub>A &nbsp;</sub>부터 T<sub>H &nbsp;</sub>까지의 거래의 머클 루트이다. 그리고 이렇게 생성된 머클 루트에 의해서 불변성과 무결성을 쉽게 유지할 수 있다.
+
+99,997번 비트코인의 머클루트는 `5140e5972f672bf8e81bc189894c55a410723b095716eaeec845490aed785f0e`이고 이 블록에는 총 2개의 거래가 있다. 각 TXID는 다음과 같다.
+
+0. `b86f5ef1da8ddbdb29ec269b535810ee61289eeac7bf2b2523b494551f03897c`
+1. `80c6f121c3e9fe0a59177e49874d8c703cbadee0700a782e4002e87d862373c6`
+
+이 TXID를 이용해 위 머클루트를 구해보자.
+
+```javascript
+const crypto = require('crypto');
+
+function hexToBin(hexString) {
+    return Buffer.from(hexString, 'hex');
+}
+
+function sha256(input) {
+    const hash = crypto.createHash('sha256').update(Buffer.from(input, 'hex')).digest();
+    return crypto.createHash('sha256').update(hash).digest().toString('hex')
+}
+
+function littleEndianToBigEndian(input) {
+    const buf = Buffer.from(input, 'hex');  
+    const reversedBuf = Buffer.from(buf.reverse());  
+    return reversedBuf.toString('hex'); 
+}
+
+function bigEndianToLittleEndian(input) {
+    const buf = Buffer.from(input, 'hex');  
+    const reversedBuf = Buffer.from(buf.reverse()); 
+    return reversedBuf.toString('hex'); 
+}
+
+big_hash_0 = littleEndianToBigEndian("b86f5ef1da8ddbdb29ec269b535810ee61289eeac7bf2b2523b494551f03897c")
+big_hash_1 = littleEndianToBigEndian("80c6f121c3e9fe0a59177e49874d8c703cbadee0700a782e4002e87d862373c6")
+
+console.log(big_hash_0)
+console.log(big_hash_1)
+
+console.log(bigEndianToLittleEndian(sha256(big_hash_0 + big_hash_1)))
+// 5140e5972f672bf8e81bc189894c55a410723b095716eaeec845490aed785f0e
+```
+리틀 엔디안을 빅 엔디안으로 변환해주는 것이 핵심이다. 빅 엔디안으로 변환해준 이유는 비트코인에서는 거래 데이터의 대부분의 필드가 리틀 엔디안 형식이기 때문이다. 리틀 엔디안에서 빅 엔디안으로 변환할 때 먼저 각 문자 쌍을 바꾼 다음 문자열을 반대로 바꿔준다.
+
+```python
+import hashlib
+import binascii
+
+u=lambda x: binascii.unhexlify(x)
+r=lambda x: x[::-1]
+
+r(u("b86f5ef1da8ddbdb29ec269b535810ee61289eeac7bf2b2523b494551f03897c"))
+```
+파이썬에서는 위와 같이 리틀 엔디안에서 빅 엔디안으로 변환할 수 있다.
+
+```
+❯ node Merkle\ root.js
+Merkle Root : 5140e5972f672bf8e81bc189894c55a410723b095716eaeec845490aed785f0e
+```
+코드를 돌려보면 머클루트가 정상적으로 구해지는 것을 확인할 수 있다.
+
+
+## 이더리움이란?
+
+이더리움은 스마트 계약이라 불리는 애플리케이션 코드를 안전하게 실행하고, 확인하는 P2P 네트워크를 구축하는 분산형 블록체인 플랫폼이, 화폐단위는 ETH이다. 스마트 계약을 통해서는 사용자가 중앙 기관 없이 서로 거래를 할 수 있다. 
