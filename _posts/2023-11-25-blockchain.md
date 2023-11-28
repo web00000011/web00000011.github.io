@@ -170,9 +170,8 @@ console.log(JSON.stringify(smashingCoin, null, 4));
 ```
 위 코드는 위에서 설명한 블록체인에 블록이 추가되기 까지의 과정을 구현한 코드이다.
 
-![](https://www.notion.so/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F9a5130d6-cf56-4bd9-8e9b-4ac666fd88f6%2Fd3e2b848-a163-4425-beef-2f188f28a1fb%2FUntitled.png?table=block&id=69c8e87d-7ecb-4e0d-9090-9bd851d70d20&spaceId=9a5130d6-cf56-4bd9-8e9b-4ac666fd88f6&width=2000&userId=54bb8d41-f1b7-45fb-8f3a-7162d9846226&cache=v2)
-
-그러나 코드를 실행해보면 두 번째, 세 번째 블록의 해시를 보면 합의 알고리즘이 적용되지 않은 것을 볼 수 있다. 이 경우, 블록체인 네트워크는 노드들 간에 일관된 데이터 상태를 유지하는 데 어려움을 겪을 수 있다. 합의 알고리즘은 분산된 환경에서 동일한 블록체인을 유지하기 위해 필요한 규칙과 메커니즘을 제공한다. 따라서 합의 알고리즘이 없다면 일관성 부재, 데이터 충돌과 위조, 이중 지불과 같이 보안 이슈가 발생할 수 있다.
+![](https://www.notion.so/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F9a5130d6-cf56-4bd9-8e9b-4ac666fd88f6%2F44a1e496-8b63-4230-bc9a-e700f4476645%2F%25E1%2584%2589%25E1%2585%25B3%25E1%2584%258F%25E1%2585%25B3%25E1%2584%2585%25E1%2585%25B5%25E1%2586%25AB%25E1%2584%2589%25E1%2585%25A3%25E1%2586%25BA_2023-11-28_22.18.06.png?table=block&id=06986ef7-77dc-4b39-b5ed-dc0b896dea57&spaceId=9a5130d6-cf56-4bd9-8e9b-4ac666fd88f6&width=2000&userId=54bb8d41-f1b7-45fb-8f3a-7162d9846226&cache=v2)
+그러나 코드를 실행해보면 두 번째, 세 번째, 네 번째 블록의 해시를 보면 합의 알고리즘이 적용되지 않은 것을 볼 수 있다. 이 경우, 블록체인 네트워크는 노드들 간에 일관된 데이터 상태를 유지하는 데 어려움을 겪을 수 있다. 합의 알고리즘은 분산된 환경에서 동일한 블록체인을 유지하기 위해 필요한 규칙과 메커니즘을 제공한다. 따라서 합의 알고리즘이 없다면 일관성 부재, 데이터 충돌과 위조, 이중 지불과 같이 보안 이슈가 발생할 수 있다.
 
 ```javascript
 proofOfWork(difficulty) {
@@ -186,8 +185,7 @@ proofOfWork(difficulty) {
 ```
 위와 같은 함수를 추가하고 다시 코드를 실행 해보자.
 
-![](https://www.notion.so/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F9a5130d6-cf56-4bd9-8e9b-4ac666fd88f6%2Fcf170b36-4270-4554-98c1-152d43d37653%2FUntitled.png?table=block&id=d2864ce8-20ec-4af4-87a9-dbe40f96a61e&spaceId=9a5130d6-cf56-4bd9-8e9b-4ac666fd88f6&width=2000&userId=54bb8d41-f1b7-45fb-8f3a-7162d9846226&cache=v2)
-
+![](https://www.notion.so/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F9a5130d6-cf56-4bd9-8e9b-4ac666fd88f6%2Fe254e2ae-8076-45b1-bfa1-169db6949cb9%2FUntitled.png?table=block&id=3e90ab38-73d7-4eaa-b415-881d2a677d97&spaceId=9a5130d6-cf56-4bd9-8e9b-4ac666fd88f6&width=2000&userId=54bb8d41-f1b7-45fb-8f3a-7162d9846226&cache=v2)
 블록의 해시를 보면 0이 4개로 시작하는 것을 볼 수 있다. 즉 nonce 값을 이용해서 해시를 만드는데 만약  difficulty(난이도)와 충족되는 해시가 아니라면 nonce의 값을 증가 시켜서 충족되는 해시가 나올 때 까지 루프를 타게 된다.
 
 위 코드는 따로 난이도 조절은  없고, 예시로 든 코드이지만 실제로 블록체인 네트워크는 일정한 간격으로 새로운 블록을 생성하는 것을 목표로 하고 있기 때문에 난이도 조절을 한다.
