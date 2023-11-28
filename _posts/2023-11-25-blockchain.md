@@ -19,7 +19,7 @@ excerpt: <b>&#35;Web3.0, &#35;Blockchain, &#35;ETH, &#35;Smart Contract</b>
 
 ## 블록체인이란?
 
-![](https://www.notion.so/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F9a5130d6-cf56-4bd9-8e9b-4ac666fd88f6%2F67b766ad-a837-48e3-9e91-f4e2067b9d63%2FUntitled.png?table=block&id=57a206c8-43a6-46c2-a162-7d4a1e8d73da&spaceId=9a5130d6-cf56-4bd9-8e9b-4ac666fd88f6&width=2000&userId=54bb8d41-f1b7-45fb-8f3a-7162d9846226&cache=v2)
+![](https://www.notion.so/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F9a5130d6-cf56-4bd9-8e9b-4ac666fd88f6%2F0b9180cd-967f-4b6d-826c-82c5e3cf54bf%2FUntitled.png?table=block&id=03f24911-2b55-43d0-88f9-60ec677f99e2&spaceId=9a5130d6-cf56-4bd9-8e9b-4ac666fd88f6&width=2000&userId=54bb8d41-f1b7-45fb-8f3a-7162d9846226&cache=v)
 
 블록체인은 쉽게 말해서 변조 방지를 위한 디지털 장부라고 볼 수 있다.  블록체인은 위와 같은 블록의 체인이며 블록 내에는 거래 내역 및 데이터들이 저장되고, 이 블록 내에 저장되는 데이터는 블록체인의 유형에 따라 다르다. 또한 이 블록체인은 중앙화로 구성되어 있는 은행과는 다르게 탈중앙화 되어 있다.
 
@@ -83,7 +83,7 @@ class CryptoBlock{
     }   
 }
 ```
-블록 생성을 위한 클래스는 위와 같이 만들 수 있다. index는 현재 블록의 번호, timestampe는 블록이 생성되는 시간, data는 거래와 관련된 정보, previousHash에는 이전 블록의 해쉬, hash는 현재 블록의 해쉬 값이다. 그리고 현재 블록의 해쉬를 생성하는 메서드인 computeHash() 메서드를 보면 현재 블록의 번호, 이전 블록의 해쉬, 현재 블록의 생성 시간, 거래 정보를 모두 더해서 해쉬로 만드는 것을 확인할 수 있다.
+블록 생성을 위한 클래스는 위와 같이 만들 수 있다 (머클 루트는 제외 함). index는 현재 블록의 번호, timestampe는 블록이 생성되는 시간, data는 거래와 관련된 정보, previousHash에는 이전 블록의 해쉬, hash는 현재 블록의 해쉬 값이다. 그리고 현재 블록의 해쉬를 생성하는 메서드인 computeHash() 메서드를 보면 현재 블록의 번호, 이전 블록의 해쉬, 현재 블록의 생성 시간, 거래 정보를 모두 더해서 해쉬로 만드는 것을 확인할 수 있다.
 
 ## 블록체인의 작동 방식
 
