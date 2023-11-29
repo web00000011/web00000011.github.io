@@ -381,6 +381,9 @@ TXID 1 : 80c6f121c3e9fe0a59177e49874d8c703cbadee0700a782e4002e87d862373c6
 ```
 99,997번 비트코인의 머클루트는 Merkle Root of 99,997이고, 이 블록에는 총 2개의 거래가 있다. 각 TXID는 TXID 0,1이다. 이 TXID를 이용해 위 머클루트를 구해보자.
 
+![](https://miro.medium.com/v2/resize:fit:1400/format:webp/1*EA7FYersQE_oS6SLBuxlNQ.jpeg)
+머클트리를 만드는 공식은 위와 같다.
+
 ```javascript
 const crypto = require('crypto');
 
